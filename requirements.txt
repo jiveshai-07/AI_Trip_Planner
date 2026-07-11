@@ -1,0 +1,16 @@
+streamlit>=1.44.0
+streamlit[auth]
+
+openai>=1.40.0
+
+pillow
+torch
+torchvision
+transformers
+
+reportlab
+
+folium
+streamlit-folium
+geopy
+requests
