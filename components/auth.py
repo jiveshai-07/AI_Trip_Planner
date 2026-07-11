@@ -8,27 +8,6 @@ def check_login():
         st.session_state.logged_in = False
         st.session_state.username = None
 
-    # ==================================================
-    # GOOGLE OAUTH CHECK (Safe for Streamlit Cloud)
-    # ==================================================
-
-    try:
-        if hasattr(st, "user") and getattr(st.user, "is_logged_in", False):
-
-            st.session_state.logged_in = True
-
-            username = getattr(st.user, "name", None)
-
-            if not username:
-                username = getattr(st.user, "email", "Google User")
-
-            st.session_state.username = username
-
-            return
-
-    except Exception:
-        pass
-
     if st.session_state.logged_in:
         return
 
@@ -75,7 +54,7 @@ def check_login():
     st.markdown("""
     <div class="auth-title">✈️ AI Trip Planner</div>
     <div class="auth-subtitle">
-    Plan smarter trips with AI agents working for you
+        Plan smarter trips with AI agents working for you
     </div>
     """, unsafe_allow_html=True)
 
@@ -84,42 +63,12 @@ def check_login():
     with col2:
 
         # ==================================================
-        # GOOGLE LOGIN
-        # ==================================================
-
-        col_icon, col_btn = st.columns([1, 5])
-
-        with col_icon:
-            st.markdown(
-                """
-                <div style="display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            height:38px;
-                            margin-top:2px;">
-                    <img src="https://www.google.com/favicon.ico" width="26">
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-        with col_btn:
-            try:
-                if st.button(
-                    "Continue with Google",
-                    use_container_width=True
-                ):
-                    st.login("google")
-            except Exception:
-                st.caption(
-                    "Google login is unavailable on this deployment."
-                )
-
-        # ==================================================
         # LOGIN / SIGNUP
         # ==================================================
 
         tab1, tab2 = st.tabs(["🔐 Login", "📝 Sign Up"])
+
+        # ---------------- LOGIN ----------------
 
         with tab1:
 
@@ -150,9 +99,9 @@ def check_login():
 
                     else:
 
-                        st.error(
-                            "Invalid username or password."
-                        )
+                        st.error("Invalid username or password.")
+
+        # ---------------- SIGN UP ----------------
 
         with tab2:
 
@@ -226,11 +175,4 @@ def logout():
 
     st.session_state.logged_in = False
     st.session_state.username = None
-
-    try:
-        if hasattr(st, "user") and getattr(st.user, "is_logged_in", False):
-            st.logout()
-    except Exception:
-        pass
-
     st.rerun()
