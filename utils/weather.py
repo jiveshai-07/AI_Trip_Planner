@@ -1,6 +1,8 @@
 import requests
 
-API_KEY = "ac9517cffd0be368900e60de00b1186c"
+import streamlit as st
+
+API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
 
 def get_weather(destination):
